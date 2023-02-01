@@ -1,0 +1,6 @@
+pyaudio
+SpeechRecognition
+git+https://github.com/openai/whisper.git
+Flask
+flask_socketio
+torch

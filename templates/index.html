@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flask App</title>
+</head>
+<body>
+    <h1>Latest Lines</h1>
+    <div id="lines"></div>
+
+    <!-- include the Socket.IO client library -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.js"></script>
+    <script>
+        var maxLines = 10;
+        var lines = [];
+        var socket = io();
+
+        socket.on("newline", function(data) {
+            lines.unshift(data);
+            if (lines.length > maxLines) {
+                lines.pop();
+            }
+            updateLines();
+        });
+        socket.on("editline", function(data) {
+            lines[0] = data;
+            updateLines();
+        });
+
+        function updateLines() {
+            var linesDiv = document.getElementById("lines");
+            linesDiv.innerHTML = "";
+            for (var i = 0; i < lines.length; i++) {
+                linesDiv.innerHTML += "<p>" + lines[i] + "</p>";
+            }
+        }
+    </script>
+</body>
+
+</html>
